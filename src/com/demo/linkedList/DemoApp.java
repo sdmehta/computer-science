@@ -89,6 +89,8 @@ public class DemoApp {
 
         iterate(head);
 
+        Node lineHeads[] = new Node[25];
+
 
     }
 
