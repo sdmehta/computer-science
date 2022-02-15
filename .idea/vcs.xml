@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Assign_2_Ameya_Chindarkar_COSC1P03" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/DataStructuresDemo" vcs="Git" />
   </component>
 </project>
