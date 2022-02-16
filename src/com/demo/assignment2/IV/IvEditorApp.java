@@ -19,7 +19,18 @@ public class IvEditorApp {
         }
 
         return dummy.next;
+    }
 
+    private Node getTail(Node head){
+        Node prev = null;
+        Node curr = head;
+
+        while(curr != null){
+            prev = curr;
+            curr = curr.next;
+        }
+
+        return prev;
     }
 
     private void  insert(int ipLine, int ipStart, String ipText){
@@ -49,18 +60,6 @@ public class IvEditorApp {
         }
     }
 
-    private Node getTail(Node head){
-        Node prev = null;
-        Node curr = head;
-
-        while(curr != null){
-             prev = curr;
-             curr = curr.next;
-        }
-
-        return prev;
-    }
-
     private void insertText(int ipLine, int ipStart, Node lineHead){
 
         if(lineHead == null) return;
@@ -87,7 +86,6 @@ public class IvEditorApp {
                 }
             }
     }
-
 
     private void delete(int ipLine, int ipStart, int ipEnd){
         if(ipStart < 0) {
@@ -118,7 +116,7 @@ public class IvEditorApp {
 
         if(prev == null){
             lineHeads[ipLine] = head.next;
-        } else {
+        } else if(curr != null) {
             prev.next = curr.next;
         }
     }
@@ -142,19 +140,27 @@ public class IvEditorApp {
         }
 
         if(prev == null){
-            lineHeads[ipLine] = head.next;
-        } else {
+            lineHeads[ipLine] = curr != null ? curr.next : null;
+        } else if(curr != null) {
             prev.next = curr.next;
+        } else {
+            prev.next = null;
         }
     }
 
+    private void replace(int ipLine, int ipStart, int ipEnd, String ipText) {
+        delete(ipLine, ipStart, ipEnd);
+        insert(ipLine, ipStart, ipText);
+    }
 
     private void writeOutput(BasicForm form) {
         StringBuilder output = new StringBuilder();
 
+        int lineNumber = 0;
         for(Node lineHead: lineHeads){
+            String lineNumberText = lineNumber < 10 ? "  " + lineNumber++ + " : " : " " + lineNumber++ + " : ";
+            output.append(lineNumberText);
             while(lineHead != null){
-                System.out.println(lineHead.data);
                 output.append(lineHead.data);
                 lineHead = lineHead.next;
             }
@@ -163,7 +169,19 @@ public class IvEditorApp {
 
         form.clear("O");
         form.writeString("O", output.toString());
+        form.
+    }
 
+    private BasicForm createForm() {
+        String[] RadioLabel = {"Insert","Delete","Replace"};
+        BasicForm form = new BasicForm("Apply Edit","Exit");
+        form.addTextField("L","Line",4,15,10);
+        form.addTextField("S","Start",4,100,10);
+        form.addTextField("E","End",4,200,10);
+        form.addTextField("T","Text",30);
+        form.addRadioButtons("action","Edit Action",false,RadioLabel);
+        form.addTextArea("O","OutPut",20,40);
+        return  form;
     }
 
     public static void main(String[] args){
@@ -184,48 +202,29 @@ public class IvEditorApp {
         app.writeOutput(form);
 
         do {
-            form.accept();
+            int button = form.accept();
+            if(button == 1) {
+                System.exit(0);
+            }
             //1. read inputs
             ipLine = form.readInt("L");
-            ipStart = form.readInt("S");
-            System.out.println("start : " + ipStart);
-            ipEnd = form.readInt("E");
+            String ipStartStr = form.readString("S") == null || "".equals(form.readString("S")) ? "-1" : form.readString("S");
+            ipStart = Integer.valueOf(ipStartStr);
+            String ipEndStr = form.readString("E") == null || "".equals(form.readString("E")) ? "-1" : form.readString("E");
+            ipEnd = Integer.valueOf(ipEndStr);
             ipText = form.readString("T");
             ipAction = form.readString("action");
 
-
-
             //2. check action and process
             if(ipAction.equals("Insert")){
-                System.out.println(ipAction);
                 app.insert(ipLine, ipStart, ipText);
-
             }else if (ipAction.equals("Delete")){
-                System.out.println(ipAction);
                 app.delete(ipLine, ipStart, ipEnd);
-
             }else if (ipAction.equals("Replace")){
-                System.out.println(ipAction);
+                app.replace(ipLine, ipStart, ipEnd, ipText);
             }
 
-            //form.writeString("O" , form.readString("T"));
             app.writeOutput(form);
         }while(true);
-   }
-
-   private BasicForm createForm() {
-       String[] RadioLabel = {"Insert","Delete","Replace"};
-       BasicForm form = new BasicForm("Apply Edit","Exit");
-       form.addTextField("L","Line",4,15,10);
-       form.addTextField("S","Start",4,100,10);
-       form.addTextField("E","End",4,200,10);
-       form.addTextField("T","Text",30);
-       form.addRadioButtons("action","Edit Action",false,RadioLabel);
-       form.addTextArea("O","OutPut",20,40);
-        return  form;
-   }
-
-   private void insert(int ipLine, int ipStart, int ipEnd) {
-        System.out.println("in insert");
    }
 }
