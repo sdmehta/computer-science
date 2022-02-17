@@ -1,9 +1,26 @@
 package com.demo.assignment2.IV;
+
 import BasicIO.BasicForm;
 
-public class IvEditorApp {
-    Node [] lineHeads = new Node[50];
 
+/**
+ * IV Editor Application Class
+ * Name: Ameya Chindarkar
+ * Student Number: 7023609
+ * @author AmeyaC
+ */
+public class IvEditorApp {
+    /**
+     * Node array which will hold Head of all lines
+     */
+    private Node [] lineHeads = new Node[50];
+
+
+    /**
+     * Created Linked List representing line of string
+     * @param str
+     * @return Node
+     */
     private  Node createLine (String str) {
         Node dummy = new Node(' ');
 
@@ -21,6 +38,11 @@ public class IvEditorApp {
         return dummy.next;
     }
 
+    /**
+     * This method traverse through line and returns  its tail node
+     * @param head
+     * @return Node
+     */
     private Node getTail(Node head){
         Node prev = null;
         Node curr = head;
@@ -33,6 +55,12 @@ public class IvEditorApp {
         return prev;
     }
 
+    /**
+     * This method inserts new line or new text in existing line
+     * @param ipLine
+     * @param ipStart
+     * @param ipText
+     */
     private void  insert(int ipLine, int ipStart, String ipText){
         Node lineHead = createLine(ipText);
 
@@ -43,6 +71,11 @@ public class IvEditorApp {
         }
     }
 
+    /**
+     * This method inserts new line at ipLine index and move every line down by 1
+     * @param ipLine
+     * @param lineHead
+     */
     private void insertLine(int ipLine, Node lineHead){
         if(lineHeads[ipLine] == null) {
             lineHeads[ipLine] = lineHead;
@@ -60,33 +93,46 @@ public class IvEditorApp {
         }
     }
 
+
+    /**
+     * This method inserts new text in existing line in ipLine at ipStart
+     * @param ipLine
+     * @param ipStart
+     * @param lineHead
+     */
     private void insertText(int ipLine, int ipStart, Node lineHead){
 
         if(lineHead == null) return;
 
         Node lineTail = getTail(lineHead);
 
-            if (ipStart == 0) {
-                lineTail.next = lineHeads[ipLine];
-                lineHeads[ipLine] = lineHead;
-            }else if (ipStart > 0){
-                Node prev = null;
-                Node curr = lineHeads[ipLine];
+        if (ipStart == 0) {
+            lineTail.next = lineHeads[ipLine];
+            lineHeads[ipLine] = lineHead;
+        }else if (ipStart > 0){
+            Node prev = null;
+            Node curr = lineHeads[ipLine];
 
-                for (int i = 0; i < ipStart && curr != null; i++){
-                    prev = curr;
-                    curr = curr.next;
-                }
-
-                if(prev == null){
-                    lineHeads[ipLine] = lineHead;
-                } else {
-                    prev.next = lineHead;
-                    lineTail.next = curr;
-                }
+            for (int i = 0; i < ipStart && curr != null; i++){
+                prev = curr;
+                curr = curr.next;
             }
+
+            if(prev == null){
+                lineHeads[ipLine] = lineHead;
+            } else {
+                prev.next = lineHead;
+                lineTail.next = curr;
+            }
+        }
     }
 
+    /**
+     * This method deletes line or a char or text from existing line of ipLine
+     * @param ipLine
+     * @param ipStart
+     * @param ipEnd
+     */
     private void delete(int ipLine, int ipStart, int ipEnd){
         if(ipStart < 0) {
             deleteLine(ipLine);
@@ -97,12 +143,22 @@ public class IvEditorApp {
         }
     }
 
+    /**
+     * This method deletes line from index ipLine
+     * @param ipLine
+     */
     private void deleteLine(int ipLine){
         for(int i = ipLine; i < lineHeads.length - 1; i++){
             lineHeads[i] = lineHeads[i + 1];
         }
     }
 
+
+    /**
+     * This method to delete a character in line ipLine from index ipStart
+     * @param ipLine
+     * @param ipStart
+     */
     private void deleteChar(int ipLine, int ipStart){
         Node head = lineHeads[ipLine];
 
@@ -121,6 +177,12 @@ public class IvEditorApp {
         }
     }
 
+    /**
+     * This method to delete multiple characters in line ipLine from index ipStart to ipEnd
+     * @param ipLine
+     * @param ipStart
+     * @param ipEnd
+     */
     private void deleteChars(int ipLine, int ipStart, int ipEnd){
         Node head = lineHeads[ipLine];
 
@@ -148,11 +210,25 @@ public class IvEditorApp {
         }
     }
 
+    /**
+     * This method to replace text from line.
+     * Calls delete and insert
+     * @param ipLine
+     * @param ipStart
+     * @param ipEnd
+     * @param ipText
+     */
     private void replace(int ipLine, int ipStart, int ipEnd, String ipText) {
         delete(ipLine, ipStart, ipEnd);
         insert(ipLine, ipStart, ipText);
     }
 
+
+
+    /**
+     * This method to write all the given inputs into the output textarea in the form
+     * @param form
+     */
     private void writeOutput(BasicForm form) {
         StringBuilder output = new StringBuilder();
 
@@ -169,9 +245,12 @@ public class IvEditorApp {
 
         form.clear("O");
         form.writeString("O", output.toString());
-        form.
     }
 
+    /**
+     * method to create the form
+     * @return BasicForm
+     */
     private BasicForm createForm() {
         String[] RadioLabel = {"Insert","Delete","Replace"};
         BasicForm form = new BasicForm("Apply Edit","Exit");
@@ -184,6 +263,10 @@ public class IvEditorApp {
         return  form;
     }
 
+    /**
+     * main method which is starting point of IV Editor application
+     * @param args
+     */
     public static void main(String[] args){
         IvEditorApp app = new IvEditorApp();
 
@@ -194,12 +277,6 @@ public class IvEditorApp {
         int ipEnd;
         String ipText;
         String ipAction;
-
-        //test
-        app.insert(0, -1, "aaaa aaaa");
-        app.insert(1, -1, "bbbb bbbb");
-        app.insert(2, -1, "cccc cccc");
-        app.writeOutput(form);
 
         do {
             int button = form.accept();
@@ -224,7 +301,8 @@ public class IvEditorApp {
                 app.replace(ipLine, ipStart, ipEnd, ipText);
             }
 
+            //3. write output
             app.writeOutput(form);
         }while(true);
-   }
+    }
 }
