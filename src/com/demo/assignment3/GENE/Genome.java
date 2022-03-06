@@ -2,15 +2,9 @@ package com.demo.assignment3.GENE;
 
 public interface Genome {
 
-    String gene;
+    public String getGene();
 
-    public String getGene() {
-        return gene;
-    }
-
-    public void setGene(String gene) {
-        this.gene = gene;
-    }
+    public void setGene(String gene);
 
     // Returns the cardinality of this.
 
@@ -57,5 +51,4 @@ public interface Genome {
     // The Genome this is reversed. E.g. A=abcde then A.Inversion() => edcba
 
     public Genome Inversion();
-
 }
