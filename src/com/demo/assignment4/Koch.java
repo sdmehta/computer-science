@@ -280,7 +280,7 @@ int j = 1;
         turtleDisplayer.show();
 
         koch.yertle.penDown();
-        koch.kochL(10, 800);
+        koch.kochL(3, 800);
 
 
         while(true) {
