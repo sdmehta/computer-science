@@ -2,6 +2,7 @@
   <library name="BasicIO">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/BasicIO.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Media.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
