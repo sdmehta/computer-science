@@ -89,24 +89,32 @@ public class SortableLinkedList<E extends Comparable<E>> implements SortableList
     }
 
     @Override
-    public void sort() throws  UnderFlowException {
+    public int sort() throws  UnderFlowException {
         if(this.isEmpty()) {
             throw new UnderFlowException("List is Empty");
         }
 
+        int result = 0;
         Node prev = null, curr = first, next = first.next;
-
 
         for (int i = length-1; i >= 1 ; i--){
             prev = null; curr = first; next = first.next;
 
             for (int j = 0; j < i; j++){
+                result++;
                 if (greater(curr, next)) {
                     exch(prev, curr, next);
+                    prev = next;
+                    curr = curr;
+                    next = curr.next;
+                } else {
+                    prev = curr;
+                    curr = next;
+                    next = next.next;
                 }
-                prev = curr; curr = next; next = next.next;
             }
         }
+        return  result;
     }
 
     private boolean greater(Node curr, Node next) {
