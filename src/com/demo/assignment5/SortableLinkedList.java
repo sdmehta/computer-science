@@ -30,12 +30,12 @@ public class SortableLinkedList<E extends Comparable<E>> implements SortableList
     }
 
 
-    public E remove() throws  UnderFlowException {
+    public E remove() throws NoItemException {
         Node prev = null;
         Node curr = first;
 
         if(this.isEmpty()) {
-            throw new UnderFlowException("List is Empty");
+            throw new NoItemException("List is Empty");
         }
 
         while(curr.next != null){
@@ -53,9 +53,9 @@ public class SortableLinkedList<E extends Comparable<E>> implements SortableList
         return curr.data;
     }
 
-    public E get() throws UnderFlowException {
+    public E get() throws NoItemException {
         if(this.isEmpty()) {
-            throw new UnderFlowException("List is Empty");
+            throw new NoItemException("List is Empty");
         }
 
         return last.data;
@@ -89,9 +89,9 @@ public class SortableLinkedList<E extends Comparable<E>> implements SortableList
     }
 
     @Override
-    public int sort() throws  UnderFlowException {
+    public int sort() throws NoItemException {
         if(this.isEmpty()) {
-            throw new UnderFlowException("List is Empty");
+            throw new NoItemException("List is Empty");
         }
 
         int result = 0;
