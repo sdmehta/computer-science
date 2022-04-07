@@ -1,6 +1,6 @@
 package com.demo.assignment5;
 
-public class NoItemException extends Exception{
+public class NoItemException extends RuntimeException{
     public NoItemException() {
         this("No Item present");
     }

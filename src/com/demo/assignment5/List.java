@@ -1,6 +1,6 @@
 package com.demo.assignment5;
 
-public interface List<E extends Comparable<E>> extends  Iterable<E> {
+public interface List<E extends Comparable<E>> extends Iterable<E> {
     /**
      * Returns the length (number of valid 2 nodes) in the linkedlist. It initially starts with 0 nodes
      * @return int
@@ -36,7 +36,7 @@ public interface List<E extends Comparable<E>> extends  Iterable<E> {
      * @return E
      * @throws NoItemException
      */
-    public E get() throws NoItemException;
+    public E get();
 
     /**
      * It will try to find the element specified. After this, cursor is pointing to the node of that element.
@@ -56,5 +56,5 @@ public interface List<E extends Comparable<E>> extends  Iterable<E> {
      * @return E
      * @throws NoItemException
      */
-    public E remove() throws NoItemException;
+    public E remove();
 }

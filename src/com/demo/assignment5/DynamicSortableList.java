@@ -1,8 +1,6 @@
 package com.demo.assignment5;
 
-import java.util.Iterator;
-
-public class DynamicList<E extends Comparable<E>> implements List<E> {
+public class DynamicSortableList<E extends Comparable<E>> implements SortableList<E> {
     private Node<E> head;
     private Node<E> tail;
     private Node<E> cursor;
@@ -107,12 +105,48 @@ public class DynamicList<E extends Comparable<E>> implements List<E> {
         return head;
     }
 
-    /**
-     *
-     * @return Iterator
-     */
     @Override
-    public Iterator<E> iterator() {
-        return new DynamicListIterator<>(this);
+    public int sort() {
+        if(this.empty()) {
+            throw new NoItemException("List is Empty");
+        }
+
+        int result = 0;
+        Node<E> prev = null, curr = this.head, next = this.head.next;
+
+        for (int i = length-1; i >= 1 ; i--){
+            prev = null; curr = this.head; next = this.head.next;
+
+            for (int j = 0; j < i; j++){
+                result++;
+                if (greater(curr, next)) {
+                    exch(prev, curr, next);
+                    prev = next;
+                    curr = curr;
+                    next = curr.next;
+                } else {
+                    prev = curr;
+                    curr = next;
+                    next = next.next;
+                }
+            }
+        }
+        return  result;
     }
+
+    private boolean greater(Node<E> curr, Node<E> next) {
+        return curr.data.compareTo(next.data) > 0;
+    }
+
+    private void exch(Node<E> prev, Node<E> curr, Node<E> next) {
+        if(prev == null) {
+            this.head = next;
+        } else {
+            prev.next = next;
+        }
+
+        curr.next = next.next;
+        next.next = curr;
+    }
+
 }
