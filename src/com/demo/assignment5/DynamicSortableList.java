@@ -1,5 +1,7 @@
 package com.demo.assignment5;
 
+import java.util.Iterator;
+
 public class DynamicSortableList<E extends Comparable<E>> implements SortableList<E> {
     private Node<E> head;
     private Node<E> tail;
@@ -103,6 +105,15 @@ public class DynamicSortableList<E extends Comparable<E>> implements SortableLis
      */
     public Node<E> getFront() {
         return head;
+    }
+
+    /**
+     *
+     * @return Iterator
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new DynamicSortableListIterator<>(this);
     }
 
     @Override

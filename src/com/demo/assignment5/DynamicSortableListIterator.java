@@ -3,9 +3,11 @@ package com.demo.assignment5;
 import java.util.Iterator;
 
 public class DynamicSortableListIterator<E extends Comparable<E>> implements Iterator<E> {
+    DynamicSortableList<E> list;
     Node<E> cursor;
 
-    public DynamicSortableListIterator(DynamicListIterator<E> list) {
+    public DynamicSortableListIterator(DynamicSortableList<E> list) {
+        this.list = list;
         this.cursor = list.getFront();
     }
 

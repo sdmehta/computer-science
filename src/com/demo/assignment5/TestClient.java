@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class TestClient {
     public static void main(String[] args) {
-        SortableList<Integer> list = new SortableLinkedList<>();
+        SortableList<Integer> list = new DynamicSortableList<>();
         int N = 100;
         Iterator<Integer> iter;
 
