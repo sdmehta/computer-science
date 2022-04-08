@@ -3,7 +3,7 @@ package com.demo.assignment5;
 import java.util.Iterator;
 import java.util.Random;
 
-public class TestClient {
+public class TestSorting {
     public static void main(String[] args) {
         SortableList<Integer> list = new DynamicSortableList<>();
         int N = 100;
@@ -14,7 +14,7 @@ public class TestClient {
            list.add(random.nextInt(101));
        }
 
-       System.out.println("List: ");
+       System.out.println("Unsorted List: ");
         iter = list.iterator();
         while(iter.hasNext()) {
             System.out.print(iter.next() + " -> ");

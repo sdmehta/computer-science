@@ -30,7 +30,7 @@ public class DynamicList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public void advance() {
-        if(this.cursor != null && this.cursor.next != null)
+        if(this.cursor != null)
             this.cursor = this.cursor.next;
     }
 
@@ -47,6 +47,7 @@ public class DynamicList<E extends Comparable<E>> implements List<E> {
         while(this.cursor != null) {
             if (this.cursor.data.compareTo(element) == 0)
                 break;
+            this.cursor = this.cursor.next;
         }
     }
 
@@ -61,6 +62,7 @@ public class DynamicList<E extends Comparable<E>> implements List<E> {
             node.next = this.head;
             this.head = node;
         } else if(this.offEnd()) {              // 3. head != null, cur == null
+            this.tail.next = node;
             this.tail = node;
         } else {                                // 4. head != cur != null
             Node prev = head;
