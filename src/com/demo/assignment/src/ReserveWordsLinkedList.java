@@ -1,6 +1,6 @@
 package com.demo.assignment.src;
 
-public class LinkedList {
+public class ReserveWordsLinkedList {
     private Node head;
     private int size;
 
@@ -86,8 +86,22 @@ public class LinkedList {
         return true;
     }
 
+    public void set(int index, String data){
+        Node curr = head;
+
+        if(!(index >= 0 && index  < this.size)) {
+            System.err.println("Index out of bounds");
+            return;
+        }
+
+        for(int i=0; i < index; i++){
+            curr = curr.next;
+        }
+
+       curr.data = data;
+    }
+
     public String get(int index){
-        Node prev = null;
         Node curr = head;
 
         if(!(index >= 0 && index  < this.size)) {
@@ -96,14 +110,10 @@ public class LinkedList {
         }
 
         for(int i=0; i < index; i++){
-            prev = curr;
             curr = curr.next;
         }
 
-        String removedData = curr.data;
-
-
-        return removedData;
+        return curr.data;
     }
 
     public String removeFromIndex(int index){
@@ -140,5 +150,28 @@ public class LinkedList {
 
     public int size(){
         return size;
+    }
+
+    public void sort() {
+        for(int i = 1; i < this.size(); i++){
+            for(int j = i; j > 0; j--) {
+                if(less(this.get(j), this.get(j - 1))) {
+                    exch(this, j, j - 1);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    public boolean less(Comparable v, Comparable w) {
+        return v.compareTo(w) < 0;
+    }
+
+    public void exch(ReserveWordsLinkedList a, int i, int j) {
+        String swap = a.get(i);
+        a.set(i, a.get(j));
+        a.set(j, swap);
+
     }
 }

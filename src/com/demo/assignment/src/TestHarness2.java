@@ -11,25 +11,31 @@ import java.util.StringTokenizer;
 
 public class TestHarness2 {
 
-    private static LinkedList getReserveWordslist() {
+    private static ReserveWordsLinkedList getReserveWordslist() {
         ASCIIDataFile file = new ASCIIDataFile("C:\\workspaces\\DataStructuresDemo\\src\\com\\demo\\assignment\\resources\\JavaReservewords.txt");
-        LinkedList reserveWordslist = new LinkedList();
+        ReserveWordsLinkedList reserveWordslist = new ReserveWordsLinkedList();
 
         while (!file.isEOF()) {
             String word = file.readString();
             reserveWordslist.add(word);
         }
 
-/*
+        System.out.println("un sorted");
         for (int i = 0; i < reserveWordslist.size(); i++) {
             System.out.println(reserveWordslist.get(i));
         }
-*/
+
+        reserveWordslist.sort();
+
+        System.out.println("sorted");
+        for (int i = 0; i < reserveWordslist.size(); i++) {
+            System.out.println(reserveWordslist.get(i));
+        }
 
         return reserveWordslist;
     }
 
-    private static IdentifiersLinkedList getSetOfIdentifiers(LinkedList reserveWordslist) throws IOException {
+    private static IdentifiersLinkedList getSetOfIdentifiers(ReserveWordsLinkedList reserveWordslist) throws IOException {
         File file = new File("C:\\workspaces\\DataStructuresDemo\\src\\com\\demo\\assignment\\src\\NestedSquares.java");
         IdentifiersLinkedList list = new IdentifiersLinkedList();
 
@@ -71,7 +77,7 @@ public class TestHarness2 {
 
 
     public static void main(String[] args) throws IOException {
-        LinkedList reserveWordslist = getReserveWordslist();
+        ReserveWordsLinkedList reserveWordslist = getReserveWordslist();
 
         IdentifiersLinkedList list = getSetOfIdentifiers(reserveWordslist);
 

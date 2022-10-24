@@ -113,6 +113,39 @@ public class IdentifiersLinkedList {
         return removedData;
     }
 
+    public Node getNode(int index){
+        Node prev = null;
+        Node curr = head;
+
+        if(!(index >= 0 && index  < this.size)) {
+            System.err.println("Index out of bounds");
+            return null;
+        }
+
+        for(int i=0; i < index; i++){
+            prev = curr;
+            curr = curr.next;
+        }
+
+        return curr;
+    }
+
+    public void set(int index, String data, int line){
+        Node curr = head;
+
+        if(!(index >= 0 && index  < this.size)) {
+            System.err.println("Index out of bounds");
+            return;
+        }
+
+        for(int i=0; i < index; i++){
+            curr = curr.next;
+        }
+
+        curr.data = data;
+        curr.lineNumber = line;
+    }
+
     public String removeFromIndex(int index){
         Node prev = null;
         Node curr = head;
@@ -144,6 +177,30 @@ public class IdentifiersLinkedList {
 
     }
 
+    public void sort() {
+        for(int i = 1; i < this.size(); i++){
+            for(int j = i; j > 0; j--) {
+                if(less(this.getNode(j).data, this.getNode(j - 1).data)) {
+                    exch(j, j - 1);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    public boolean less(Comparable v, Comparable w) {
+        return v.compareTo(w) < 0;
+    }
+
+    public void exch(int i, int j) {
+        String swapS = this.getNode(i).data;
+        int swapL = this.getNode(i).lineNumber;
+
+        this.set(i, this.getNode(j).data, this.getNode(j).lineNumber);
+        this.set(j, swapS, swapL);
+
+    }
 
     public int size(){
         return size;
