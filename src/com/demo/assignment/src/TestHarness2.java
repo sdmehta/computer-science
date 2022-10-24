@@ -25,7 +25,7 @@ public class TestHarness2 {
             System.out.println(reserveWordslist.get(i));
         }
 
-        reserveWordslist.sort();
+        //reserveWordslist.sort();
 
         System.out.println("sorted");
         for (int i = 0; i < reserveWordslist.size(); i++) {
@@ -43,7 +43,6 @@ public class TestHarness2 {
         int lineNumber = 0;
 
         while (true) {
-
             String line = br.readLine();
             lineNumber++;
 
@@ -64,24 +63,22 @@ public class TestHarness2 {
                 cur = cur.replace("+", "");
                 cur = cur.replace("-", "");
 
-//                System.out.println(cur + " " + lineNumber);
+                cur = cur.replaceAll(" ", "");
+
+                System.out.println(cur + " " + lineNumber);
 
                 list.add(cur, lineNumber);
             }
 
         }
+         list.sort();
         return list;
     }
-
-
-
 
     public static void main(String[] args) throws IOException {
         ReserveWordsLinkedList reserveWordslist = getReserveWordslist();
 
         IdentifiersLinkedList list = getSetOfIdentifiers(reserveWordslist);
-
-
 
         ASCIIDisplayer displayer = new ASCIIDisplayer(10, 50);
 
@@ -89,9 +86,6 @@ public class TestHarness2 {
             displayer.writeLine(list.get(i));
         }
 
-
         displayer.show();
-
     }
 }
-
