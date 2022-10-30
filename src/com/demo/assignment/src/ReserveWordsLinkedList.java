@@ -86,6 +86,19 @@ public class ReserveWordsLinkedList {
         return true;
     }
 
+    public boolean contains(String data){
+        Node curr = head;
+
+        if(data == null) return false;
+
+        while(curr != null){
+            if (data.equalsIgnoreCase(curr.data)) return true;
+            curr = curr.next;
+        }
+
+        return false;
+    }
+
     public void set(int index, String data){
         Node curr = head;
 

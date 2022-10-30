@@ -67,6 +67,19 @@ public class IdentifiersLinkedList {
         this.size++;
     }
 
+    public boolean contains(String data){
+        Node curr = head;
+
+        if(data == null) return false;
+
+        while(curr != null){
+            if (data.equalsIgnoreCase(curr.data)) return true;
+            curr = curr.next;
+        }
+
+        return false;
+    }
+
     public boolean remove(String data){
         Node prev = null;
         Node curr = head;
@@ -86,6 +99,40 @@ public class IdentifiersLinkedList {
             size--;
         }
         return true;
+    }
+
+    public String getData(int index){
+        Node prev = null;
+        Node curr = head;
+
+        if(!(index >= 0 && index  < this.size)) {
+            System.err.println("Index out of bounds");
+            return null;
+        }
+
+        for(int i=0; i < index; i++){
+            prev = curr;
+            curr = curr.next;
+        }
+
+        return curr.data;
+    }
+
+    public int getLine(int index){
+        Node prev = null;
+        Node curr = head;
+
+        if(!(index >= 0 && index  < this.size)) {
+            System.err.println("Index out of bounds");
+            return -1;
+        }
+
+        for(int i=0; i < index; i++){
+            prev = curr;
+            curr = curr.next;
+        }
+
+        return curr.lineNumber;
     }
 
     public String get(int index){
