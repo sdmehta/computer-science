@@ -80,6 +80,19 @@ public class IdentifiersLinkedList {
         return false;
     }
 
+    public boolean contains(String data, int line){
+        Node curr = head;
+
+        if(data == null) return false;
+
+        while(curr != null){
+            if (data.equalsIgnoreCase(curr.data) && line == curr.lineNumber) return true;
+            curr = curr.next;
+        }
+
+        return false;
+    }
+
     public boolean remove(String data){
         Node prev = null;
         Node curr = head;
