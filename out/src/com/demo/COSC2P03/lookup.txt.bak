@@ -121,6 +121,7 @@ DESCRIPTION
 
        -i, --interactive
               prompt before overwrite (overrides a previous -n option)
+
 ----------
 mv
 mv - move files

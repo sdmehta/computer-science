@@ -1,18 +1,189 @@
 ls
-list directory 
- l - asasasdasd 
- r - asdasdas
+ls - list directory contents
+SYNOPSIS         
+       ls [OPTION]... [FILE]...
+DESCRIPTION         
+       List information about the FILEs (the current directory by
+       default).  Sort entries alphabetically if none of -cftuvSUX nor
+       --sort is specified.
 
+       Mandatory arguments to long options are mandatory for short
+       options too.
+
+       -a, --all
+              do not ignore entries starting with .
+
+       -A, --almost-all
+              do not list implied . and ..
+
+       --author
+              with -l, print the author of each file
+
+       -b, --escape
+              print C-style escapes for nongraphic characters
+
+       --block-size=SIZE
+              with -l, scale sizes by SIZE when printing them; e.g.,
+              '--block-size=M'; see SIZE format below
+
+       -B, --ignore-backups
+              do not list implied entries ending with ~
+
+       -c     with -lt: sort by, and show, ctime (time of last
+              modification of file status information); with -l: show
+              ctime and sort by name; otherwise: sort by ctime, newest
+              first
+
+       -C     list entries by columns
 ----------
-A
-ehhh Bye
+chmod
+chmod - change permissions of a file
+SYNOPSIS         
+       #include <sys/stat.h>
 
+       int chmod(const char *pathname, mode_t mode);
+
+       #include <fcntl.h>           /* Definition of AT_* constants */
+       #include <sys/stat.h>
+
+       int fchmodat(int dirfd, const char *pathname, mode_t mode, int flags);
+
+   Feature Test Macro Requirements for glibc (see
+   feature_test_macros(7)):
+
+DESCRIPTION         
+       The chmod() and fchmod() system calls change a file's mode bits.
+       (The file mode consists of the file permission bits plus the set-
+       user-ID, set-group-ID, and sticky bits.)  These system calls
+       differ only in how the file is specified:
+
+       * chmod() changes the mode of the file specified whose pathname
+         is given in pathname, which is dereferenced if it is a symbolic
+         link.
+
+       * fchmod() changes the mode of the file referred to by the open
+         file descriptor fd.
+
+       The new file mode is specified in mode, which is a bit mask
+       created by ORing together zero or more of the following:
+
+       S_ISUID  (04000)
+              set-user-ID (set process effective user ID on execve(2))
+
+       S_ISGID  (02000)
+              set-group-ID (set process effective group ID on execve(2);
+              mandatory locking, as described in fcntl(2); take a new
+              file's group from parent directory, as described in
+              chown(2) and mkdir(2))
+
+       S_ISVTX  (01000)
+              sticky bit (restricted deletion flag, as described in
+              unlink(2))
+
+       S_IRUSR  (00400)
+              read by owner
+
+       S_IWUSR  (00200)
+              write by owner
 ----------
-B
-Bye
+cp
+cp - copy files and directories
+SYNOPSIS         
+       cp [OPTION]... [-T] SOURCE DEST
+       cp [OPTION]... SOURCE... DIRECTORY
+       cp [OPTION]... -t DIRECTORY SOURCE...
+DESCRIPTION         
+       Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
 
+       Mandatory arguments to long options are mandatory for short
+       options too.
+
+       -a, --archive
+              same as -dR --preserve=all
+
+       --attributes-only
+              don't copy the file data, just the attributes
+
+       --backup[=CONTROL]
+              make a backup of each existing destination file
+
+       -b     like --backup but does not accept an argument
+
+       --copy-contents
+              copy contents of special files when recursive
+
+       -d     same as --no-dereference --preserve=links
+
+       -f, --force
+              if an existing destination file cannot be opened, remove
+              it and try again (this option is ignored when the -n
+              option is also used)
+
+       -i, --interactive
+              prompt before overwrite (overrides a previous -n option)
 ----------
-L
-Lye
+mv
+mv - move files
+SYNOPSIS         
+       mv [-if] source_file target_file
 
+       mv [-if] source_file... target_dir
+DESCRIPTION         
+       In the first synopsis form, the mv utility shall move the file
+       named by the source_file operand to the destination specified by
+       the target_file.  This first synopsis form is assumed when the
+       final operand does not name an existing directory and is not a
+       symbolic link referring to an existing directory. In this case,
+       if source_file names a non-directory file and target_file ends
+       with a trailing <slash> character, mv shall treat this as an
+       error and no source_file operands will be processed.
+
+       In the second synopsis form, mv shall move each file named by a
+       source_file operand to a destination file in the existing
+       directory named by the target_dir operand, or referenced if
+       target_dir is a symbolic link referring to an existing directory.
+       The destination path for each source_file shall be the
+       concatenation of the target directory, a single <slash> character
+       if the target did not end in a <slash>, and the last pathname
+       component of the source_file.  This second form is assumed when
+       the final operand names an existing directory.
+
+       If any operand specifies an existing file of a type not specified
+       by the System Interfaces volume of POSIX.1‐2017, the behavior is
+       implementation-defined.
+
+       For each source_file the following steps shall be taken:
+
+        1. If the destination path exists, the -f option is not
+           specified, and either of the following conditions is true:
+
+            a. The permissions of the destination path do not permit
+               writing and the standard input is a terminal.
+
+            b. The -i option is specified.
+
+           the mv utility shall write a prompt to standard error and
+           read a line from standard input. If the response is not
+           affirmative, mv shall do nothing more with the current
+           source_file and go on to any remaining source_files.
+
+        2. If the source_file operand and destination path resolve to
+           either the same existing directory entry or different
+           directory entries for the same existing file, then the
+           destination path shall not be removed, and one of the
+           following shall occur:
+
+            a. No change is made to source_file, no error occurs, and no
+               diagnostic is issued.
+
+            b. No change is made to source_file, a diagnostic is issued
+               to standard error identifying the two names, and the exit
+               status is affected.
+
+            c. If the source_file operand and destination path name
+               distinct directory entries, then the source_file operand
+               is removed, no error occurs, and no diagnostic is issued.
+
+           The mv utility shall do nothing more with the current
+           source_file, and go on to any remaining source_files.
 ----------

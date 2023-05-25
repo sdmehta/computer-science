@@ -86,7 +86,7 @@ public class SortedLookup implements Lookup {
         if (key == null || "".equals(key))
             return null;
 
-        Node node = head.next;
+        Node node = head;
 
         while (node != null) {
             if (key.equalsIgnoreCase(node.key))
