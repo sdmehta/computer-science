@@ -112,7 +112,7 @@ public class SortedLookup implements Lookup {
             return new String[0];
 
         int count = 0;
-        Node node = head.next;
+        Node node = head;
         while (node != null) {
             if (searchKey.equalsIgnoreCase(node.key) || node.data.toLowerCase().contains(searchKey.toLowerCase()))
                 count++;
@@ -121,7 +121,7 @@ public class SortedLookup implements Lookup {
 
         String result[] = new String[count];
         int i = 0;
-        node = head.next;
+        node = head;
         while (node != null) {
             if (searchKey.equalsIgnoreCase(node.key) || node.data.toLowerCase().contains(searchKey.toLowerCase()))
                 result[i++] = node.key;

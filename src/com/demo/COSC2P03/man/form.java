@@ -12,7 +12,7 @@ public class form {
 
     public form() {
         form = new BasicForm("man", "whatis", "apropos", "quit");
-        lookup =  new SortedLookup(new ASCIIDataFile("C:\\workspaces\\DataStructuresDemo\\src\\com\\demo\\COSC2P03\\lookup.txt"));
+        lookup =  new SortedLookup(new ASCIIDataFile());
         setupForm();
         runForm();
         form.close();
@@ -31,21 +31,56 @@ public class form {
         while (true) {
             button = form.accept();
             String queryInupt = form.readString("query");
-            String queryOutput = null;
+            String output = null;
 
             if (button == 0) {
-                queryOutput = lookup.lookup(queryInupt);
+                output = getMan(queryInupt);
             } else if (button == 1) {
-                queryOutput = lookup.lookup(queryInupt).split("\r\n")[0];
+                output = getWhatIs(queryInupt);
             } else if (button == 2) {
-                queryOutput = "apropos of " + queryInupt;
+                output = getApropos(queryInupt);
             } else if (button == 3) {
                 break;
             }
 
             form.clear("result");
-            form.writeString("result", queryOutput);
+            form.writeString("result", output);
         }
+    }
+
+    private String getMan(String query) {
+        String result = null;
+        try {
+            result = lookup.lookup(query);
+        } catch (Exception e) {
+            result = "Error - " + e.getMessage();
+            System.out.println(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    private String getWhatIs(String query) {
+        String result = null;
+        try {
+            result = lookup.lookup(query).split("\r\n")[0];
+        } catch (Exception e) {
+            result = "Error - " + e.getMessage();
+            System.out.println(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    private String getApropos(String query) {
+        String[] keys = lookup.search(query);
+        StringBuilder str = new StringBuilder();
+        for (String key : keys) {
+            str.append(getWhatIs(key));
+            str.append("\r\n");
+        }
+
+        return str.toString();
     }
 
     public static void main(String[] args) {
