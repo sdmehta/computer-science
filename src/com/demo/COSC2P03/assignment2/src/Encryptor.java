@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.PriorityQueue;
 
 public class Encryptor {
+    private static String filePath = "C:\\workspaces\\DataStructuresDemo\\src\\com\\demo\\\\COSC2P03\\assignment2\\resources";
+    private static String inputFileName = "testing.txt";
+    private static String outputFileName = "encrypted.txt";
+
     public static void main(String[] args) throws IOException {
         // Step 1 - read input file and create char array
-        FileService inputFileService =  new FileService("C:\\workspaces\\DataStructuresDemo\\src\\com\\demo\\COSC2P03\\assignment2", "input.txt");
+        FileService inputFileService =  new FileService(filePath, inputFileName);
         char[] inputCharacters = inputFileService.readFile();
 
         // Step 2 - create frequency table array
@@ -18,24 +22,19 @@ public class Encryptor {
         // step 4 - create Tree
         Node root = getCodeBookTree(minHeap);
 
-        // step 5- write code book in output file
-        String[] codes = inorderTraversal(root, new String(""), new String[128]);
-
-        for(int i = 0; i < 128; i++) {
-            if(codes[i] != null)
-                System.out.println(String.valueOf((char)i) + "\t" + codes[i]);
-        }
-
-        FileService outputFileService =  new FileService("C:\\workspaces\\DataStructuresDemo\\src\\com\\demo\\COSC2P03\\assignment2", "output.txt");
-        outputFileService.writeCodeBookFile(codes);
+        // step 5- generate codes
+        String[] codes = inorderTraversal(root, new String(""), new String[256]);
 
         // step 6 - create encrypted message
-       // StringBuilder encryptedMessage = getEncryptedMessage(inputCharacters, codes);
+        String encryptedMessage = getEncryptedMessage(inputCharacters, codes);
 
+        // step 7 - write encrypted file
+        FileService outputFileService =  new FileService(filePath, outputFileName);
+        outputFileService.writeEncryptedFile(codes, encryptedMessage);
     }
 
     public static int[] getFrequencyTable(char[] input) {
-        int[] frequencyTable = new int[128];
+        int[] frequencyTable = new int[256];
         for (int i = 0; i < input.length; i++) {
            frequencyTable[input[i]]++;
         }
@@ -45,7 +44,7 @@ public class Encryptor {
     private static PriorityQueue<Node> getHeapOfNodes(int[] freqTable) {
         PriorityQueue<Node> heap = new PriorityQueue<>();
 
-        for(int i = 0; i < 128; i++) {
+        for(int i = 0; i < 256; i++) {
             if(freqTable[i] > 0)
                 heap.add(new Node(String.valueOf((char)i), freqTable[i]));
         }
@@ -86,6 +85,14 @@ public class Encryptor {
         return codeBook;
     }
 
-//    private static StringBuilder getEncryptedMessage(char[] input, List<St>)
+    private static String getEncryptedMessage(char[] input, String[] codes) {
+        StringBuilder encryptedStrBuilder = new StringBuilder("");
+
+        for (char c: input) {
+            encryptedStrBuilder.append(codes[c]).append(" ");
+        }
+
+        return encryptedStrBuilder.toString();
+    }
 }
 

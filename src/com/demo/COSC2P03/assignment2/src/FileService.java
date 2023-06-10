@@ -17,14 +17,20 @@ public class FileService {
         return input.toCharArray();
     }
 
-    public void writeCodeBookFile(String[] codes) throws IOException {
+    public void writeEncryptedFile(String[] codes, String msg) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-        for(int i = 0; i < 128; i++) {
-            String codeString = String.valueOf((char)i) + "\t" + codes[i];
-            writer.write(codeString);
-            writer.newLine();
+        for(int i = 0; i < 256; i++) {
+            if (codes[i] != null) {
+                String codeString = String.valueOf((char) i) + "\t" + codes[i];
+                writer.write(codeString);
+                writer.newLine();
+            }
         }
+
+        writer.write("---");
+        writer.newLine();
+        writer.write(msg);
 
         writer.close();
     }

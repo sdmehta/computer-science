@@ -38,3 +38,15 @@ i. for char from characters array
 - create stringbuilder with codes separated by a space
 
 
+---------------------------------------------------------------------------------------
+1. decrypt
+i. read file and get all codes in array
+ii. read file get encrypted message and split on " " (array of strings)
+iii. for each string(character in decrypted message)
+   - loop over codes arrays and find index
+   - append index(char) stringbuilder
+iv. write stringbuilder into decrypted file
+
+2. command line
+
+3. implement min heap
