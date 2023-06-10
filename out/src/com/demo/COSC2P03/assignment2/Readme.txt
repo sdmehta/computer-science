@@ -32,3 +32,9 @@ Last Node === root node (Tree)
 
 
 
+8. write encrypted message
+i. for char from characters array
+- lookup its code in code list
+- create stringbuilder with codes separated by a space
+
+
