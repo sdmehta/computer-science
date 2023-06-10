@@ -1,8 +1,8 @@
-package com.demo.COSC2P03;
+package com.demo.COSC2P03.assignment1;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIOutputFile;
-import com.demo.COSC2P03.mappings.SortedLookup;
+import com.demo.COSC2P03.assignment1.mappings.SortedLookup;
 
 import java.util.Arrays;
 

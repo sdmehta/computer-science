@@ -1,9 +1,9 @@
-package com.demo.COSC2P03.man;
+package com.demo.COSC2P03.assignment1.man;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.BasicForm;
-import com.demo.COSC2P03.mappings.Lookup;
-import com.demo.COSC2P03.mappings.SortedLookup;
+import com.demo.COSC2P03.assignment1.mappings.Lookup;
+import com.demo.COSC2P03.assignment1.mappings.SortedLookup;
 
 public class form {
 

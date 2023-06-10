@@ -1,4 +1,4 @@
-package com.demo.COSC2P03.mappings;
+package com.demo.COSC2P03.assignment1.mappings;
 
 import BasicIO.ASCIIOutputFile;
 
