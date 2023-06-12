@@ -1,4 +1,4 @@
-package com.demo.COSC2P03.assignment2.src;
+package com.demo.COSC2P03.assignment2.src.com.enc;
 
 public class Node implements Comparable<Node>{
     public String label;

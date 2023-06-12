@@ -1,6 +1,4 @@
-package com.demo.COSC2P03.assignment2.src.heap;
-
-import com.demo.COSC2P03.assignment2.src.Node;
+package com.demo.COSC2P03.assignment2.src.com.enc;
 
 public class MinHeap {
     Node[] heap = new Node[512];
