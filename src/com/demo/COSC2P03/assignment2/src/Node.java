@@ -1,8 +1,8 @@
 package com.demo.COSC2P03.assignment2.src;
 
 public class Node implements Comparable<Node>{
-    String label;
-    int frequency;
+    public String label;
+    public int frequency;
     Node left;
     Node right;
 
