@@ -65,5 +65,6 @@ public class FileService {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         writer.write(decryptedMessage);
         writer.close();
-    }
+}
+
 }
