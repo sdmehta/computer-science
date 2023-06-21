@@ -73,17 +73,17 @@ public class HeapSort {
         return "INVALID";
     }
 
-    private void sortIntegers(IndexedHeap<Integer> heap){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("How many numbers would you like to sort?");
-        int choice = scanner.nextInt();
-        if (userHeapType == "Ascending"){
-           
-        } else if (userHeapType == "Descending"){
+    private int[] sortIntegers(int[] unsortedArray){
+        IndexedHeap<Integer> heap = new IndexedHeapArray<>((a, b) -> a-b);
+        int[] sortedArray =  new int[unsortedArray.length];
 
-        }else {
-            throw new HeapOTroubleException();
-        }
+        for(int x : unsortedArray)
+            heap.insert(x);
+
+        for (int i = 0; i < unsortedArray.length; i++)
+            sortedArray[i] = heap.getAtIndex(i);
+
+        return  sortedArray;
     }
 
     private void sortStrings(IndexedHeap<String> heap){
@@ -109,9 +109,14 @@ public class HeapSort {
             System.out.println("inputStringsList = " + heapSort.inputStringsList);
             System.out.println("HEAP TYPE = " + heapSort.userHeapType);
 
+
             if (DATA_TYPE_INTEGERS.equals(heapSort.userDataType)){
-                IndexedHeap<Integer> heap = new IndexedHeapArray<>((a, b) -> a-b);
-                heapSort.sortIntegers(heap);
+                // step 1. create array of int size inputNumberOfIntegers
+                int[] input = new int[heapSort.inputNumberOfIntegers];
+                // step 2. generate and set random ints.
+
+                //step 3. call sort method
+                heapSort.sortIntegers(input);
             } else if (DATA_TYPE_STRINGS.equals(heapSort.userDataType)){
                 IndexedHeap<String> heap = new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER);
                 heapSort.sortStrings(heap);
