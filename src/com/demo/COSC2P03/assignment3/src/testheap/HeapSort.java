@@ -3,6 +3,7 @@ package com.demo.COSC2P03.assignment3.src.testheap;
 import com.demo.COSC2P03.assignment3.src.storage.HeapOTroubleException;
 import com.demo.COSC2P03.assignment3.src.storage.IndexedHeap;
 import com.demo.COSC2P03.assignment3.src.storage.IndexedHeapArray;
+import com.demo.COSC2P03.assignment3.src.storage.IndexedHeapTree;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -33,7 +34,9 @@ public class HeapSort {
 
             if (DATA_TYPE_INTEGERS.equals(heapSort.userDataType)){
                 int[] unsortedIntegers = new int[heapSort.inputNumberOfIntegers];
-                IndexedHeap<Integer> maxHeap = new IndexedHeapArray<>((a, b) -> b - a);
+                IndexedHeap<Integer> maxHeap = HEAP_TYPE_ARRAY.equals(heapSort.userHeapType) ?
+                        new IndexedHeapArray<>((a, b) -> a - b) :
+                        new IndexedHeapTree<>((a, b) -> a - b);
 
                 Random rand = new Random();
                 for (int i = 0; i < heapSort.inputNumberOfIntegers; i++) {
@@ -45,7 +48,9 @@ public class HeapSort {
                 System.out.println("Sorted Integers : " + Arrays.toString(sortedIntegers));
 
             } else if (DATA_TYPE_STRINGS.equals(heapSort.userDataType)){
-                IndexedHeap<String> maxHeap = new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER);
+                IndexedHeap<String> maxHeap = HEAP_TYPE_ARRAY.equals(heapSort.userHeapType) ?
+                        new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER) :
+                        new IndexedHeapTree<>(String.CASE_INSENSITIVE_ORDER);
 
                 System.out.println("unsorted Strings : " + Arrays.toString(heapSort.inputStrings));
                 String[] sortedArray = heapSort.sortStrings(heapSort.inputStrings, maxHeap);
