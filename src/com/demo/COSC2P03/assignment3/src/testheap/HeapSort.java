@@ -5,7 +5,7 @@ import com.demo.COSC2P03.assignment3.src.storage.IndexedHeap;
 import com.demo.COSC2P03.assignment3.src.storage.IndexedHeapArray;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class HeapSort {
@@ -17,10 +17,48 @@ public class HeapSort {
 
     private String userDataType = null;
     private int inputNumberOfIntegers = 0;
-    private List<String> inputStringsList = null;
+    private String[] inputStrings = null;
     private String userHeapType = null;
 
     public HeapSort (){
+    }
+
+    public static void main(String[] args) {
+        HeapSort heapSort = new HeapSort();
+        boolean continueFlag = true;
+        Scanner scanner = new Scanner(System.in);
+
+        while(continueFlag) {
+            heapSort.getUserInput(scanner);
+
+            if (DATA_TYPE_INTEGERS.equals(heapSort.userDataType)){
+                int[] unsortedIntegers = new int[heapSort.inputNumberOfIntegers];
+                IndexedHeap<Integer> maxHeap = new IndexedHeapArray<>((a, b) -> b - a);
+
+                Random rand = new Random();
+                for (int i = 0; i < heapSort.inputNumberOfIntegers; i++) {
+                    unsortedIntegers[i] = rand.nextInt(1000000000);
+                }
+
+                System.out.println("Unsorted Integers : " + Arrays.toString(unsortedIntegers));
+                int[] sortedIntegers = heapSort.sortIntegers(unsortedIntegers, maxHeap);
+                System.out.println("Sorted Integers : " + Arrays.toString(sortedIntegers));
+
+            } else if (DATA_TYPE_STRINGS.equals(heapSort.userDataType)){
+                IndexedHeap<String> maxHeap = new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER);
+
+                System.out.println("unsorted Strings : " + Arrays.toString(heapSort.inputStrings));
+                String[] sortedArray = heapSort.sortStrings(heapSort.inputStrings, maxHeap);
+                System.out.println("Sorted Strings : " + Arrays.toString(sortedArray));
+
+            } else {
+                throw new HeapOTroubleException();
+            }
+
+            continueFlag = "Y".equalsIgnoreCase(heapSort.checkUserWantstoContinue(scanner)) ? true : false;
+        }
+
+        scanner.close();
     }
 
     private void getUserInput(Scanner scanner) {
@@ -54,7 +92,7 @@ public class HeapSort {
                 line = scanner.nextLine();
             } while (line == null || "".equals(line));
 
-            inputStringsList = Arrays.asList(line.split(" "));
+            inputStrings= line.split(" ");
         }
         System.out.println();
         return;
@@ -73,62 +111,31 @@ public class HeapSort {
         return "INVALID";
     }
 
-    private int[] sortIntegers(int[] unsortedArray){
-        IndexedHeap<Integer> heap = new IndexedHeapArray<>((a, b) -> a-b);
-        int[] sortedArray =  new int[unsortedArray.length];
+    private int[] sortIntegers(int[] integers, IndexedHeap<Integer> maxHeap){
+        for(int x : integers)
+            maxHeap.insert(x);
 
-        for(int x : unsortedArray)
-            heap.insert(x);
+        for (int i = 0; i < integers.length; i++)
+            integers[i] = maxHeap.remove();
 
-        for (int i = 0; i < unsortedArray.length; i++)
-            sortedArray[i] = heap.getAtIndex(i);
-
-        return  sortedArray;
+        return integers;
     }
 
-    private void sortStrings(IndexedHeap<String> heap){
-        if (userHeapType == "Ascending"){
-
-        } else if (userHeapType == "Descending"){
-
-        }else {
-            throw new HeapOTroubleException();
+    private String[] sortStrings(String[] strings, IndexedHeap<String> maxHeap){
+        for (String str : strings) {
+            maxHeap.insert(str);
         }
+
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = maxHeap.remove();
+        }
+
+        return strings;
     }
 
-
-   public static void main(String[] args) {
-        HeapSort heapSort = new HeapSort();
-        boolean continueFlag = true;
-        Scanner scanner = new Scanner(System.in);
-
-        while(continueFlag) {
-            heapSort.getUserInput(scanner);
-            System.out.println("DATA TYPE = " + heapSort.userDataType);
-            System.out.println("inputNumberOfIntegers = " + heapSort.inputNumberOfIntegers);
-            System.out.println("inputStringsList = " + heapSort.inputStringsList);
-            System.out.println("HEAP TYPE = " + heapSort.userHeapType);
-
-
-            if (DATA_TYPE_INTEGERS.equals(heapSort.userDataType)){
-                // step 1. create array of int size inputNumberOfIntegers
-                int[] input = new int[heapSort.inputNumberOfIntegers];
-                // step 2. generate and set random ints.
-
-                //step 3. call sort method
-                heapSort.sortIntegers(input);
-            } else if (DATA_TYPE_STRINGS.equals(heapSort.userDataType)){
-                IndexedHeap<String> heap = new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER);
-                heapSort.sortStrings(heap);
-            } else {
-                throw new HeapOTroubleException();
-            }
-
-            System.out.print("Do you want to continue (y/n) ? : ");
-            String continueStr = scanner.next();
-            continueFlag = "Y".equalsIgnoreCase(continueStr) ? true : false;
-        }
-
-        scanner.close();
-   }
+    private String checkUserWantstoContinue(Scanner scanner) {
+        System.out.print("Do you want to try again (y/n) ? : ");
+        String userChoice = scanner.next();
+        return "y".equalsIgnoreCase(userChoice) ? "Y" : "N";
+    }
 }
