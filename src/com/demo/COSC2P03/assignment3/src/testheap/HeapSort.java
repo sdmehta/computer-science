@@ -2,7 +2,6 @@ package com.demo.COSC2P03.assignment3.src.testheap;
 
 import com.demo.COSC2P03.assignment3.src.storage.HeapOTroubleException;
 import com.demo.COSC2P03.assignment3.src.storage.IndexedHeap;
-import com.demo.COSC2P03.assignment3.src.storage.IndexedHeapArray;
 import com.demo.COSC2P03.assignment3.src.storage.IndexedHeapTree;
 
 import java.util.Arrays;
@@ -13,16 +12,13 @@ public class HeapSort {
 
     private static final String DATA_TYPE_INTEGERS = "INTEGERS";
     private static final String DATA_TYPE_STRINGS = "STRINGS";
-    private static final String HEAP_TYPE_ARRAY = "ARRAY";
-    private static final String HEAP_TYPE_TREE = "TREE";
     private static final String SORT_ORDER_ASC = "ASC";
     private static final String SORT_ORDER_DESC = "DESC";
 
     private String userDataType = DATA_TYPE_INTEGERS;
     private int inputNumberOfIntegers = 0;
     private String[] inputStrings = null;
-    private String userSortOrder = HEAP_TYPE_ARRAY;
-    private String userHeapType = SORT_ORDER_ASC;
+    private String userSortOrder = SORT_ORDER_ASC;
 
     public HeapSort (){
     }
@@ -69,7 +65,6 @@ public class HeapSort {
         userDataType = getDataTypeFromUser(scanner);
         getDataFromUser(scanner);
         userSortOrder = getSortOrderFromUser(scanner);
-        userHeapType = getHeapTypeFromUser(scanner);
     }
 
     public String getDataTypeFromUser (Scanner scanner){
@@ -116,41 +111,16 @@ public class HeapSort {
         return "INVALID";
     }
 
-    public String getHeapTypeFromUser(Scanner scanner){
-        System.out.print("Select Heap Type - 1.IndexedHeapArray  2.IndexedHeapTree : ");
-        int choice = scanner.nextInt();
-        System.out.println();
-        if (choice == 1){
-            return this.HEAP_TYPE_ARRAY;
-        } else if (choice == 2) {
-            return this.HEAP_TYPE_TREE;
-        }
-
-        return "INVALID";
-    }
-
     private IndexedHeap<Integer> getIntegerHeap() {
-        if (HEAP_TYPE_ARRAY.equalsIgnoreCase(userHeapType)) {
-            return SORT_ORDER_ASC.equals(userSortOrder) ?
-                    new IndexedHeapArray<Integer>((a, b) -> a - b) :
-                    new IndexedHeapArray<Integer>((a, b) -> b - a);
-        } else {
-            return SORT_ORDER_ASC.equals(userSortOrder) ?
+        return SORT_ORDER_ASC.equals(userSortOrder) ?
                     new IndexedHeapTree<Integer>((a, b) -> a - b) :
                     new IndexedHeapTree<Integer>((a, b) -> b - a);
-        }
     }
 
     private IndexedHeap<String> getStringHeap() {
-        if (HEAP_TYPE_ARRAY.equalsIgnoreCase(userHeapType)) {
-            return SORT_ORDER_ASC.equals(userSortOrder) ?
-                    new IndexedHeapArray<String>(String.CASE_INSENSITIVE_ORDER) :
-                    new IndexedHeapArray<String>(String.CASE_INSENSITIVE_ORDER.reversed());
-        } else {
             return SORT_ORDER_ASC.equals(userSortOrder) ?
                     new IndexedHeapTree<String>(String.CASE_INSENSITIVE_ORDER) :
                     new IndexedHeapTree<String>(String.CASE_INSENSITIVE_ORDER.reversed());
-        }
     }
 
     private int[] sortIntegers(int[] integers, IndexedHeap<Integer> maxHeap){

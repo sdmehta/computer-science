@@ -5,8 +5,8 @@ public class Authenticator {
     private final IndexedHeap<String> maxHeap;
 
     public Authenticator(String[] codes) {
-        minHeap = new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER);
-        maxHeap = new IndexedHeapArray<>(String.CASE_INSENSITIVE_ORDER.reversed());
+        minHeap = new IndexedHeapTree<>(String.CASE_INSENSITIVE_ORDER);  // ASCENDING
+        maxHeap = new IndexedHeapTree<>(String.CASE_INSENSITIVE_ORDER.reversed());  // DESCENDING
 
         for(String code : codes) {
             minHeap.insert(code);
